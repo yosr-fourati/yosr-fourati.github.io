@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yosr Fourati — Software Engineer & AI Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:         #0a0e1a;
+      --bg-card:    #111827;
+      --bg-card2:   #1a2235;
+      --border:     #1f2d45;
+      --accent:     #38bdf8;
+      --accent2:    #818cf8;
+      --green:      #34d399;
+      --text:       #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim:   #64748b;
+      --grad:       linear-gradient(135deg, #38bdf8, #818cf8);
+      --radius:     12px;
+      --max-w:      1100px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .75; }
+    img { max-width: 100%; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      background: rgba(10,14,26,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-weight: 700; font-size: 1.1rem;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); font-size: .9rem; font-weight: 500; }
+    .nav-links a:hover { color: var(--text); opacity: 1; }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 100px 2rem; max-width: var(--max-w); margin: 0 auto; }
+    #hero { max-width: 100%; padding: 0; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .8rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 700; margin-bottom: 3rem;
+      position: relative; padding-bottom: 1rem;
+    }
+    .section-title::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 48px; height: 3px;
+      background: var(--grad); border-radius: 2px;
+    }
+
+    /* ─── HERO ─── */
+    .hero-wrap {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 2rem 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,189,248,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.25);
+      color: var(--accent); padding: .35rem 1rem; border-radius: 999px;
+      font-size: .8rem; font-weight: 500; margin-bottom: 1.5rem;
+    }
+    .hero-badge::before { content: '●'; font-size: .5rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 800; line-height: 1.1;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: .5rem;
+    }
+    .hero-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-muted); font-weight: 400; margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      max-width: 600px; color: var(--text-muted);
+      font-size: 1rem; margin-bottom: 2.5rem; line-height: 1.8;
+    }
+    .hero-links {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .7rem 1.5rem; border-radius: 8px;
+      font-weight: 600; font-size: .9rem; transition: all .2s;
+    }
+    .btn-primary {
+      background: var(--grad); color: #fff;
+      box-shadow: 0 0 24px rgba(56,189,248,.25);
+    }
+    .btn-primary:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 4px 30px rgba(56,189,248,.35); }
+    .btn-ghost {
+      border: 1px solid var(--border); color: var(--text-muted); background: transparent;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); opacity: 1; transform: translateY(-2px); }
+    .hero-stats {
+      display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: center;
+      margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border);
+      max-width: 600px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      display: block; font-size: 2rem; font-weight: 800;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: .8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; }
+
+    /* ─── ABOUT ─── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-text p { color: var(--text-muted); margin-bottom: 1rem; }
+    .about-highlights { display: flex; flex-direction: column; gap: 1rem; }
+    .highlight-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.25rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
+      transition: border-color .2s, transform .2s;
+    }
+    .highlight-card:hover { border-color: var(--accent); transform: translateX(4px); }
+    .highlight-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .highlight-card h4 { font-size: .95rem; font-weight: 600; margin-bottom: .2rem; }
+    .highlight-card p { font-size: .85rem; color: var(--text-muted); }
+
+    /* ─── EDUCATION ─── */
+    .edu-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .edu-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      display: grid; grid-template-columns: 1fr auto; gap: 1rem;
+      transition: border-color .2s;
+    }
+    .edu-card:hover { border-color: var(--accent2); }
+    .edu-degree { font-size: 1.1rem; font-weight: 700; margin-bottom: .3rem; }
+    .edu-school { color: var(--accent); font-weight: 600; margin-bottom: .5rem; }
+    .edu-detail { font-size: .85rem; color: var(--text-muted); }
+    .edu-courses {
+      margin-top: .75rem; display: flex; flex-wrap: wrap; gap: .4rem;
+    }
+    .tag {
+      background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.2);
+      color: var(--accent); font-size: .75rem; padding: .2rem .6rem; border-radius: 999px;
+    }
+    .tag-green {
+      background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.2); color: var(--green);
+    }
+    .tag-purple {
+      background: rgba(129,140,248,.1); border: 1px solid rgba(129,140,248,.2); color: var(--accent2);
+    }
+    .edu-badge {
+      background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.3);
+      color: var(--green); padding: .4rem .9rem; border-radius: 999px;
+      font-size: .78rem; font-weight: 600; white-space: nowrap;
+    }
+    .edu-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: .5rem; }
+    .edu-period { font-size: .82rem; color: var(--text-dim); white-space: nowrap; }
+
+    /* ─── RESEARCH ─── */
+    .research-intro { color: var(--text-muted); margin-bottom: 2.5rem; max-width: 720px; }
+    .pub-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-left: 4px solid var(--accent); border-radius: var(--radius);
+      padding: 1.75rem 2rem; margin-bottom: 1.5rem; transition: transform .2s, box-shadow .2s;
+    }
+    .pub-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(56,189,248,.1); }
+    .pub-card.thesis { border-left-color: var(--accent2); }
+    .pub-card.contrib { border-left-color: var(--text-dim); }
+    .pub-venue {
+      font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .12em;
+      color: var(--accent); margin-bottom: .5rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .pub-card.thesis .pub-venue { color: var(--accent2); }
+    .pub-card.contrib .pub-venue { color: var(--text-dim); }
+    .pub-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .6rem; line-height: 1.4; }
+    .pub-authors { font-size: .85rem; color: var(--text-muted); margin-bottom: .8rem; }
+    .pub-authors strong { color: var(--text); }
+    .pub-abstract { font-size: .85rem; color: var(--text-dim); margin-bottom: 1rem; line-height: 1.6; }
+    .pub-links { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .pub-link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .8rem; font-weight: 500; padding: .3rem .75rem;
+      border-radius: 6px; border: 1px solid var(--border);
+      color: var(--text-muted); transition: all .2s;
+    }
+    .pub-link:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+    .ra-card {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem 2rem; margin-bottom: 1.5rem;
+    }
+    .ra-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem; }
+    .ra-title { font-size: 1rem; font-weight: 700; }
+    .ra-org { color: var(--accent); font-size: .88rem; }
+    .ra-period { font-size: .82rem; color: var(--text-dim); }
+    .ra-bullets { list-style: none; }
+    .ra-bullets li {
+      font-size: .88rem; color: var(--text-muted);
+      padding: .3rem 0 .3rem 1.2rem; position: relative;
+    }
+    .ra-bullets li::before {
+      content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: .8rem;
+    }
+
+    /* ─── EXPERIENCE ─── */
+    .exp-timeline { position: relative; padding-left: 2rem; }
+    .exp-timeline::before {
+      content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+    .exp-item { position: relative; margin-bottom: 2.5rem; }
+    .exp-dot {
+      position: absolute; left: -2.4rem; top: 6px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg); box-shadow: 0 0 0 2px var(--accent);
+    }
+    .exp-item:nth-child(2) .exp-dot { background: var(--accent2); box-shadow: 0 0 0 2px var(--accent2); }
+    .exp-item:nth-child(3) .exp-dot { background: var(--text-dim); box-shadow: 0 0 0 2px var(--text-dim); }
+    .exp-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.5rem 1.75rem; transition: border-color .2s;
+    }
+    .exp-card:hover { border-color: var(--accent); }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .75rem; flex-wrap: wrap; gap: .5rem; }
+    .exp-role { font-size: 1rem; font-weight: 700; }
+    .exp-company { color: var(--accent); font-size: .9rem; font-weight: 600; }
+    .exp-period { font-size: .82rem; color: var(--text-dim); text-align: right; }
+    .exp-bullets { list-style: none; margin-top: .75rem; }
+    .exp-bullets li {
+      font-size: .88rem; color: var(--text-muted);
+      padding: .3rem 0 .3rem 1.2rem; position: relative;
+    }
+    .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: .8rem; }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.75rem; display: flex; flex-direction: column;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .project-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 36px rgba(56,189,248,.1); }
+    .project-card.featured { border-color: rgba(56,189,248,.4); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(56,189,248,.04) 100%); }
+    .proj-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .proj-icon { font-size: 1.6rem; }
+    .proj-links { display: flex; gap: .5rem; }
+    .proj-link-icon { font-size: 1.2rem; opacity: .5; transition: opacity .2s; cursor: pointer; }
+    .proj-link-icon:hover { opacity: 1; }
+    .award-badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      font-size: .72rem; font-weight: 600;
+      background: rgba(250,204,21,.1); border: 1px solid rgba(250,204,21,.3);
+      color: #fbbf24; padding: .2rem .6rem; border-radius: 999px; margin-bottom: .5rem;
+    }
+    .proj-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .6rem; }
+    .proj-desc { font-size: .875rem; color: var(--text-muted); flex: 1; line-height: 1.6; margin-bottom: 1rem; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; }
+
+    /* ─── SKILLS ─── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+    .skill-group {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .skill-group h3 {
+      font-size: .8rem; text-transform: uppercase; letter-spacing: .12em;
+      color: var(--accent); margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .skill-list { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .skill-tag {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      color: var(--text-muted); font-size: .8rem; padding: .3rem .75rem; border-radius: 6px;
+      transition: all .2s;
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── CONTACT ─── */
+    .contact-wrap { text-align: center; max-width: 600px; margin: 0 auto; }
+    .contact-text { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
+    .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+    .contact-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.25rem 2rem; display: flex; align-items: center; gap: .75rem;
+      transition: border-color .2s, transform .2s; color: var(--text-muted);
+    }
+    .contact-card:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); opacity: 1; }
+    .contact-card span { font-size: 1.3rem; }
+    .contact-card p { font-size: .85rem; font-weight: 500; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center; padding: 2rem; border-top: 1px solid var(--border);
+      color: var(--text-dim); font-size: .82rem;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      section { padding: 70px 1.25rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .edu-card { grid-template-columns: 1fr; }
+      .edu-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">YF</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-wrap">
+      <div class="hero-glow"></div>
+      <h1 class="hero-name">Yosr Fourati</h1>
+      <p class="hero-title">Software Engineer &amp; AI/ML Researcher</p>
+      <p class="hero-sub">
+        MS candidate at Oakland University building intelligent systems at the intersection of
+        software engineering and large language models. Published IEEE author. Full-stack engineer
+        with production experience.
+      </p>
+      <div class="hero-links">
+        <a href="https://github.com/yosr-fourati" target="_blank" class="btn btn-primary">
+          ⬡ GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/yosrfourati/" target="_blank" class="btn btn-ghost">
+          in LinkedIn
+        </a>
+        <a href="https://scholar.google.com/citations?user=NKkyEvMAAAAJ&hl=en" target="_blank" class="btn btn-ghost">
+          🎓 Google Scholar
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">1</span>
+          <span class="stat-label">IEEE Publication</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">4.0</span>
+          <span class="stat-label">Graduate GPA · Oakland University</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">2×</span>
+          <span class="stat-label">Best Student Project</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">5+</span>
+          <span class="stat-label">Production Projects</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">// who I am</p>
+    <h2 class="section-title">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a software engineer and AI researcher currently pursuing my MS in Software Engineering
+          at Oakland University. My work sits at the intersection of backend systems,
+          full-stack development, and applied machine learning.
+        </p>
+        <p>
+          During my time as a Research Assistant at Oakland University, I co-authored
+          <strong>CARGO</strong>, a lightweight LLM routing framework published at
+          <strong>IEEE CASCON 2025</strong>. The framework dynamically selects the most suitable
+          language model per prompt, achieving 76.4% top-1 accuracy across GPT-4o, Claude 3.5
+          Sonnet, DeepSeek V3, and Perplexity Sonar.
+        </p>
+        <p>
+          On the engineering side, I've shipped production features across e-commerce platforms,
+          real estate apps, and banking systems using Java, Spring Boot, Angular, Next.js, and
+          Python. I care about clean architecture, maintainable code, and systems that actually work.
+        </p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-card">
+          <span class="highlight-icon">🔬</span>
+          <div>
+            <h4>AI/ML Research</h4>
+            <p>LLM routing, ensemble model selection, multi-agent pipelines. Published at IEEE CASCON 2025.</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon">⚙️</span>
+          <div>
+            <h4>Full-Stack Engineering</h4>
+            <p>Spring Boot, Angular, Next.js, Node.js : from REST APIs to responsive frontends.</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon">☁️</span>
+          <div>
+            <h4>Cloud & DevOps</h4>
+            <p>AWS (EC2, S3, RDS, IAM), Docker, CI/CD pipelines, and Linux environments.</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon">🏆</span>
+          <div>
+            <h4>Academic Excellence</h4>
+            <p>Two-time Best Student Project Award. President's List at Oakland University (4.0 GPA).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">// where I studied</p>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-grid">
+
+      <!-- Oakland University MS -->
+      <div class="edu-card">
+        <div>
+          <div class="edu-degree">MS in Software Engineering &amp; Information Technology</div>
+          <div class="edu-school">Oakland University · Rochester, MI, USA</div>
+          <div class="edu-detail">GPA: 3.85 &nbsp;|&nbsp; President's List (4.0 in first two semesters)</div>
+          <div class="edu-courses">
+            <span class="tag">Machine Learning</span>
+            <span class="tag">Natural Language Processing</span>
+            <span class="tag">Cloud Computing</span>
+            <span class="tag">Software Security</span>
+            <span class="tag">Algorithms</span>
+            <span class="tag">Info Retrieval &amp; Knowledge Discovery</span>
+            <span class="tag">Software Verification &amp; Testing</span>
+            <span class="tag">IT Project Management</span>
+            <span class="tag">Independent Study (AI)</span>
+            <span class="tag">Advanced Web Design Application</span>
+          </div>
+        </div>
+        <div class="edu-right">
+          <div class="edu-period">Sep 2024 – Expected Apr 2026</div>
+          <div class="edu-badge">🏅 President's List</div>
+        </div>
+      </div>
+
+      <!-- MedTech BS -->
+      <div class="edu-card">
+        <div>
+          <div class="edu-degree">BS in Software Engineering</div>
+          <div class="edu-school">Mediterranean Institute of Technology (MedTech) · Tunis, Tunisia</div>
+          <div class="edu-detail">
+            Capstone thesis: <em>"Ensemble Model Selection for LLMs"</em> supervised by Dr. Dorra Louati &amp; Dr. Amine Barrak
+          </div>
+          <div class="edu-courses">
+            <span class="tag-purple tag">Best Senior Student Project 🏆</span>
+            <span class="tag-purple tag">Best Junior Student Project 🏆</span>
+          </div>
+        </div>
+        <div class="edu-right">
+          <div class="edu-period">Sep 2021 – May 2024</div>
+          <div class="edu-badge" style="background:rgba(129,140,248,.1);border-color:rgba(129,140,248,.3);color:var(--accent2);">2× Award Winner</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- RESEARCH & PUBLICATIONS -->
+  <section id="research">
+    <p class="section-label">// published work</p>
+    <h2 class="section-title">Research &amp; Publications</h2>
+    <p class="research-intro">
+      My research focuses on making large language model deployments smarter and more efficient
+      through dynamic routing, ensemble selection, and multi-agent coordination. Below are my
+      published papers, thesis, and contributed research projects.
+    </p>
+
+    <!-- RA Position -->
+    <div class="ra-card">
+      <div class="ra-header">
+        <div>
+          <div class="ra-title">Research Assistant</div>
+          <div class="ra-org">Oakland University · Department of Computer Science &amp; Engineering</div>
+        </div>
+        <div class="ra-period">September 2024 – August 2025</div>
+      </div>
+      <ul class="ra-bullets">
+        <li>Co-designed and implemented CARGO, a confidence-aware multi-LLM routing framework published at IEEE CASCON 2025.</li>
+        <li>Engineered a response collection pipeline of 5,289+ prompts across 4 LLMs using the OpenRouter API.</li>
+        <li>Implemented a pairwise LLM-as-judge ranking system: pair generation, automated judge calls, score aggregation, and inter-judge agreement metrics.</li>
+        <li>Designed category-specific routing models achieving 84.9% accuracy on coding tasks with Random Forest.</li>
+        <li>Built preprocessing and evaluation pipelines using Python, PyTorch, and scikit-learn. Benchmarked routing achieving 76.4% top-1 accuracy and 72–89% win rates.</li>
+        <li>Contributed early design and implementation of a Planner-Executor-Critic multi-agent pipeline (arXiv:2510.07614).</li>
+      </ul>
+    </div>
+
+    <!-- CARGO Paper -->
+    <div class="pub-card">
+      <div class="pub-venue">
+        📄 IEEE CASCON 2025 &nbsp;·&nbsp; arXiv:2509.14899 &nbsp;·&nbsp; Peer-Reviewed Conference Paper
+      </div>
+      <div class="pub-title">
+        CARGO: A Framework for Confidence-Aware Routing of Large Language Models
+      </div>
+      <div class="pub-authors">
+        A. Barrak, <strong>Y. Fourati</strong>, M. Olchawa, E. Ksontini, K. Zoghlami
+        &nbsp;·&nbsp; Oakland University &amp; Mediterranean Institute of Technology
+      </div>
+      <div class="pub-abstract">
+        CARGO is a lightweight, confidence-aware framework for dynamic LLM selection. It employs
+        a single embedding-based regressor trained on LLM-judged pairwise comparisons to predict
+        model performance, with an optional binary classifier invoked when predictions are
+        uncertain. Evaluated on GPT-4o, Claude 3.5 Sonnet, DeepSeek V3, and Perplexity Sonar
+        achieving 76.4% top-1 accuracy and 72–89% win rates against individual models.
+      </div>
+      <div class="pub-links">
+        <a href="https://arxiv.org/abs/2509.14899" target="_blank" class="pub-link">🔗 arXiv</a>
+        <a href="https://ieeexplore.ieee.org/document/10809100" target="_blank" class="pub-link">📚 IEEE Xplore</a>
+        <span class="tag tag-green" style="align-self:center;">Published</span>
+      </div>
+    </div>
+
+    <!-- Multi-Agent Paper -->
+    <div class="pub-card contrib">
+      <div class="pub-venue">
+        📄 arXiv:2510.07614 &nbsp;·&nbsp; Contributed Research
+      </div>
+      <div class="pub-title">
+        Traceability and Accountability in Role-Specialized Multi-Agent LLM Pipelines
+      </div>
+      <div class="pub-authors">
+        Amine Barrak et al. &nbsp;·&nbsp; <strong>Contributor: Yosr Fourati</strong>
+      </div>
+      <div class="pub-abstract">
+        Contributed to the early design and implementation of a Planner-Executor-Critic
+        multi-agent pipeline. Prepared and preprocessed evaluation datasets (AGIEval, LogiQA)
+        and engineered role-specific prompts for each agent.
+      </div>
+      <div class="pub-links">
+        <a href="https://arxiv.org/abs/2510.07614" target="_blank" class="pub-link">🔗 arXiv</a>
+        <span class="tag" style="align-self:center;">Contributor</span>
+      </div>
+    </div>
+
+    <!-- Thesis -->
+    <div class="pub-card thesis">
+      <div class="pub-venue">
+        🎓 Bachelor's Capstone Thesis &nbsp;·&nbsp; Mediterranean Institute of Technology, 2024–2025
+      </div>
+      <div class="pub-title">
+        Ensemble Model Selection for LLMs: Does Picking the Best Model Improve Response Quality?
+      </div>
+      <div class="pub-authors">
+        <strong>Yosr Fourati</strong> &nbsp;·&nbsp;
+        Supervised by Dr. Dorra Louati (MedTech) &amp; Dr. Amine Barrak (Oakland University)
+      </div>
+      <div class="pub-abstract">
+        Introduced a dynamic routing framework that routes prompts to the best-suited LLM
+        among four state-of-the-art models (DeepSeek V3, Claude-3.5 Sonnet, GPT-4o, Perplexity Sonar)
+        across five task categories. The framework achieves win rates of 65–90% over individual
+        models, with a top-1 accuracy of 74.6% using DeBERTaV3Small. Category-specific routing
+        with Random Forest reaches 84.9% accuracy on coding tasks.
+      </div>
+      <div class="pub-links">
+        <span class="tag" style="align-self:center;background:rgba(250,204,21,.1);border-color:rgba(250,204,21,.3);color:#fbbf24;">Outstanding Grade</span>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider" />
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">// where I've worked</p>
+    <h2 class="section-title">Industry Experience</h2>
+    <div class="exp-timeline">
+
+      <!-- TA -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Graduate Teaching Assistant</div>
+              <div class="exp-company">Oakland University · Rochester, MI, USA</div>
+            </div>
+            <div class="exp-period">Sep 2025 – Present</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Assist undergraduate computing courses covering software systems, system integration, and web technologies.</li>
+            <li>Support lab sessions, handle grading, and provide one-on-one student mentoring.</li>
+            <li>Help students debug projects and understand core system architecture concepts.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Software Systems</span>
+            <span class="tag">Web Technologies</span>
+            <span class="tag">Mentoring</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bee Coders -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Full-Stack Engineer Intern</div>
+              <div class="exp-company">Bee Coders · Remote</div>
+            </div>
+            <div class="exp-period">Jun 2024 – Aug 2024</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Designed and implemented end-to-end features for a multi-seller e-commerce platform using Java Spring Boot, Angular, and MySQL.</li>
+            <li>Completed 32 Jira tickets across core modules: authentication, product management, cart, checkout, order history, and role-based dashboards for Admin, Seller, and Customer.</li>
+            <li>Integrated Stripe payments, implementing full billing and payment flows with validation and error handling.</li>
+            <li>Built RESTful APIs, database schemas, and Angular frontend components from scratch.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Spring Boot 3</span>
+            <span class="tag">Angular 17</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Stripe API</span>
+            <span class="tag">JWT Auth</span>
+            <span class="tag">REST APIs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STB Bank -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Software Engineer Intern</div>
+              <div class="exp-company">STB Bank · Tunis, Tunisia</div>
+            </div>
+            <div class="exp-period">Jun 2023 – Aug 2023</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Maintained a legacy system for historical client debt data, ensuring accurate retrieval and processing for internal workflows.</li>
+            <li>Wrote and validated SQL queries and Python scripts to clean, reconcile, and prepare datasets, improving data reliability and reducing manual correction effort.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Data Processing</span>
+            <span class="tag">Legacy Systems</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- EPPM -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Software Engineer Intern</div>
+              <div class="exp-company">EPPM · Tunis, Tunisia</div>
+            </div>
+            <div class="exp-period">Jun 2022 – Aug 2022</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Contributed to internal web application development as a second-year engineering student, turning feature requirements into working UI and backend updates.</li>
+            <li>Integrated frontend components with backend APIs and iterated on usability improvements based on feedback from internal users.</li>
+            <li>Gained hands-on exposure to real-world software workflows including version control, code review, and working within an existing codebase.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Web Development</span>
+            <span class="tag">Backend Integration</span>
+            <span class="tag">UI Development</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">// things I've built</p>
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+
+      <!-- ShopSphere -->
+      <div class="project-card featured">
+        <div class="proj-header">
+          <span class="proj-icon">🛒</span>
+          <div class="proj-links">
+            <a href="https://github.com/yosr-fourati/ShopSphere" target="_blank" title="GitHub">
+              <span class="proj-link-icon">⬡</span>
+            </a>
+          </div>
+        </div>
+        <div class="proj-title">ShopSphere</div>
+        <p class="proj-desc">
+          Full-stack multi-role e-commerce marketplace. Buyers browse and checkout, sellers manage
+          listings and orders, admins monitor platform GMV and analytics. JWT auth, Stripe payments,
+          40+ REST endpoints, admin dashboard with Angular Signals.
+        </p>
+        <div class="proj-tags">
+          <span class="tag">Spring Boot 3</span>
+          <span class="tag">Angular 17</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">Stripe</span>
+          <span class="tag">JWT</span>
+          <span class="tag">Spring Security</span>
+        </div>
+      </div>
+
+      <!-- Indeed Immobilier -->
+      <div class="project-card">
+        <div class="proj-header">
+          <span class="proj-icon">🏠</span>
+        </div>
+        <div class="proj-title">Indeed Immobilier</div>
+        <p class="proj-desc">
+          Full-stack real estate agency platform for property listings and management.
+          Includes property search, filtering, sale/rent workflows, and location metadata.
+          Deployed to production with focus on performance and clean architecture.
+        </p>
+        <div class="proj-tags">
+          <span class="tag">Next.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Prisma ORM</span>
+          <span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+
+      <!-- Event Management -->
+      <div class="project-card">
+        <div class="proj-header">
+          <span class="proj-icon">🎫</span>
+          <div>
+            <div class="award-badge">🏆 Best Senior Project Award</div>
+          </div>
+        </div>
+        <div class="proj-title">Event Management System</div>
+        <p class="proj-desc">
+          Comprehensive event platform with organizer dashboard and full attendee experience.
+          Features QR-based check-in, event scheduling, ticket management, and post-event workflows.
+          Awarded Best Student Project at MedTech (Senior year).
+        </p>
+        <div class="proj-tags">
+          <span class="tag-green tag">Award Winner</span>
+        </div>
+      </div>
+
+      <!-- KhademniApp -->
+      <div class="project-card">
+        <div class="proj-header">
+          <span class="proj-icon">📱</span>
+          <div>
+            <div class="award-badge">🏆 Best Junior Project Award</div>
+          </div>
+        </div>
+        <div class="proj-title">KhademniApp</div>
+        <p class="proj-desc">
+          Mobile application connecting short-term employers and job seekers. Implemented
+          user management, job discovery flows, and matching logic to streamline gig-style
+          hiring. Awarded Best Student Project at MedTech (Junior year).
+        </p>
+        <div class="proj-tags">
+          <span class="tag-green tag">Award Winner</span>
+          <span class="tag">Mobile</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">// tools of the trade</p>
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <div class="skill-list">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">C / C++</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Frontend</h3>
+        <div class="skill-list">
+          <span class="skill-tag">Angular 17</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Backend</h3>
+        <div class="skill-list">
+          <span class="skill-tag">Spring Boot</span>
+          <span class="skill-tag">Spring Security</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">Express</span>
+          <span class="skill-tag">Prisma ORM</span>
+          <span class="skill-tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Databases</h3>
+        <div class="skill-list">
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Cloud &amp; DevOps</h3>
+        <div class="skill-list">
+          <span class="skill-tag">AWS (EC2, S3, RDS, IAM)</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">CI/CD</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>AI / ML</h3>
+        <div class="skill-list">
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">TensorFlow</span>
+          <span class="skill-tag">scikit-learn</span>
+          <span class="skill-tag">LLM Routing</span>
+          <span class="skill-tag">NLP</span>
+          <span class="skill-tag">Pairwise Ranking</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Tools &amp; Workflow</h3>
+        <div class="skill-list">
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">Jest</span>
+          <span class="skill-tag">Shell Scripting</span>
+          <span class="skill-tag">OpenRouter API</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Research Methods</h3>
+        <div class="skill-list">
+          <span class="skill-tag">LLM-as-Judge</span>
+          <span class="skill-tag">Pairwise Comparison</span>
+          <span class="skill-tag">Embedding Regression</span>
+          <span class="skill-tag">Multi-Agent Pipelines</span>
+          <span class="skill-tag">Benchmark Evaluation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-wrap">
+      <p class="section-label" style="text-align:center">// get in touch</p>
+      <h2 class="section-title" style="text-align:center; padding-bottom:0;">Let's Connect</h2>
+      <div style="width:48px;height:3px;background:var(--grad);border-radius:2px;margin:1rem auto 2rem;"></div>
+      <div class="contact-links">
+        <a href="mailto:yosrfourati@oakland.edu" class="contact-card">
+          <span>✉️</span>
+          <p>yosrfourati@oakland.edu</p>
+        </a>
+        <a href="https://www.linkedin.com/in/yosrfourati/" target="_blank" class="contact-card">
+          <span>💼</span>
+          <p>linkedin.com/in/yosrfourati</p>
+        </a>
+        <a href="https://github.com/yosr-fourati" target="_blank" class="contact-card">
+          <span>⬡</span>
+          <p>github.com/yosr-fourati</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Designed &amp; built by Yosr Fourati · 2026</p>
+  </footer>
+
+</body>
+</html>
